@@ -1,5 +1,6 @@
 package com.huesandbox.mike.huesandbox;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -107,13 +108,20 @@ public class MainActivity extends ActionBarActivity {
     public void bridgeConnected(final PHBridge bridge) {
         //PHBridge bridge = PHHueSDK.getInstance().getSelectedBridge();
 
-        final PHLightState lightState = new PHLightState();
-        lightState.setHue(39);
-        PHBridgeResourcesCache cache = bridge.getResourceCache();
-        // And now you can get any resource you want, for example:
-        List myLights = cache.getAllLights();
-        PHLight light = (PHLight)myLights.get(2);
-        bridge.updateLightState(light, lightState);
+        for(int i = 0; i < 46920; i+=200) {
+            final PHLightState lightState = new PHLightState();
+            lightState.setHue(i);
+            PHBridgeResourcesCache cache = bridge.getResourceCache();
+            // And now you can get any resource you want, for example:
+            List myLights = cache.getAllLights();
+            PHLight light = (PHLight) myLights.get(2);
+            bridge.updateLightState(light, lightState);
+            try {
+                Thread.sleep(100);                 //1000 milliseconds is one second.
+            } catch(InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
     }
 
     @Override
